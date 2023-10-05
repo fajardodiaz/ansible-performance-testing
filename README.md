@@ -1,15 +1,24 @@
 # Ansible configuration to do Performance testing with JMeter and Jenkins
 
 ## 1- Set hosts in ~/.ssh/config file
-Host ubuntu-master-1
-    HostName xxx.xxx.xxx.xxx
-    User ubuntu
-    IdentityFile /path/to/pem/file
- 
-Host ubuntu-slave-1
-    HostName xxx.xxx.xxx.xxx
-    User ubuntu
-    IdentityFile /path/to/pem/file
+    Host ubuntu-master-1
+
+        HostName xxx.xxx.xxx.xxx
+
+        User ubuntu
+
+        IdentityFile /path/to/pem/file
+
+---
+
+    Host ubuntu-slave-1
+
+        HostName xxx.xxx.xxx.xxx
+    
+        User ubuntu
+    
+        IdentityFile /path/to/pem/file
+---
 
 ## 2- Config the hosts file in Ansible
 [master]
