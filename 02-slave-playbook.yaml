@@ -1,0 +1,60 @@
+- name: Playbook to install common tools
+  hosts: slaves
+  remote_user: ubuntu
+  tasks:
+  - name: Install Python3
+    apt:
+        update_cache: true
+        name: python3
+        state: latest
+
+  - name: Install pip3
+    apt:
+        name: python3-pip
+        state: latest
+  
+  - name: Install bzt
+    shell:
+      cmd: pip3 install bzt
+
+  - name: Copy .bzt-rc file
+    copy:
+        src: ./.bzt-rc
+        dest: /home/ubuntu
+        owner: ubuntu
+        mode: '0744'
+  
+  - name: Copy .bzt-rc file to root
+    copy:
+        src: ./.bzt-rc
+        dest: /root
+        owner: ubuntu
+        mode: '0744'
+   # Install JMETER
+  - name: Download jmeter
+    get_url:
+        url: https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.zip
+        dest: /home/ubuntu/apache-jmeter-5.6.2.zip
+  - name: Unzip jmeter
+    unarchive:
+      src: /home/ubuntu/apache-jmeter-5.6.2.zip
+      dest: /opt/
+      remote_src: yes
+  - name: Set the JMeterHOME in /etc/profile file
+    lineinfile:
+        path: /etc/profile
+        state: present
+        line: "{{ item }}"
+    with_items:
+        - 'export PATH="/opt/apache-jmeter-5.6.2/bin/:$PATH"'
+  - name: Reload /etc/profile file
+    shell:
+        cmd: . /etc/profile
+  - name: Move cmd runner
+    copy: 
+      src: ./cmdrunner-2.3.jar
+      dest: /opt/apache-jmeter-5.6.2/lib
+  - name: Move plugin manager
+    copy: 
+      src: ./jmeter-plugins-manager-1.9.jar
+      dest: /opt/apache-jmeter-5.6.2/lib/ext/
