@@ -1,0 +1,5 @@
+[master]
+ubuntu-master-1
+
+[slaves]
+ubuntu-slave-1
