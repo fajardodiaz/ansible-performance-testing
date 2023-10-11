@@ -1,0 +1,9 @@
+- name: Playbook move folders
+  hosts: slaves
+  remote_user: pruebas
+  tasks:
+  - name: Install required plugins
+    shell:
+      cmd: cd /opt/apache-jmeter-5.6.2/lib && java -jar cmdrunner-2.3.jar --tool org.jmeterplugins.repository.PluginManagerCMD install-for-jmx /home/ubuntu/folder_to_copy/File.jmx
+
+  
